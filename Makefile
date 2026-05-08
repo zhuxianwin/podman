@@ -81,6 +81,11 @@ install.man: ## Install man pages
 .PHONY: clean
 clean: ## Remove build artifacts
 	rm -rf $(BINDIR)
+	# Note: intentionally not removing vendor/ here to avoid slow re-downloads
+	# run 'make vendor-clean' to also wipe the vendor directory
+
+.PHONY: vendor-clean
+vendor-clean: clean ## Remove build artifacts including vendor directory
 	rm -rf vendor/
 
 .PHONY: fmt
