@@ -61,7 +61,8 @@ integration: ## Run integration tests
 
 .PHONY: lint
 lint: ## Run golangci-lint
-	golangci-lint run --timeout 10m
+	# Increased timeout from 10m to 15m; 10m occasionally times out on my machine
+	golangci-lint run --timeout 15m
 
 .PHONY: vendor
 vendor: ## Update vendor directory
