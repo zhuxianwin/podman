@@ -24,6 +24,9 @@ INSTALL.DATA ?= $(INSTALL) -m 644
 
 PODMAN_VERSION ?= $(shell cat version/version.go | grep 'Version = ' | awk '{print $$3}' | tr -d '"')
 
+# Use -count=1 to disable test result caching, which can hide flaky tests
+GO_TEST_FLAGS ?= -count=1
+
 .PHONY: all
 all: binaries
 
@@ -53,11 +56,11 @@ test: unit integration ## Run all tests
 
 .PHONY: unit
 unit: ## Run unit tests
-	$(GO) test -tags "$(GOTAGS)" ./...
+	$(GO) test $(GO_TEST_FLAGS) -tags "$(GOTAGS)" ./...
 
 .PHONY: integration
 integration: ## Run integration tests
-	$(GO) test -tags "$(GOTAGS) integration" -v ./test/...
+	$(GO) test $(GO_TEST_FLAGS) -tags "$(GOTAGS) integration" -v ./test/...
 
 .PHONY: lint
 lint: ## Run golangci-lint
